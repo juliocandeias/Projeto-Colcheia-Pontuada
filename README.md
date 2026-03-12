@@ -103,6 +103,12 @@ colcheia-pontuada/
 - [ ] Desenvolvimento do Backend
 - [ ] Desenvolvimento da Interface
 
+
+## MER do projeto
+
+https://excalidraw.com/#json=7uTW7G_1ZCx8ijZvB4fn7,x_02gZd02wPOong7-zL5HA
+
+
 ## Contribuições
 
 Contribuições são bem-vindas! Crie issues para sugestões/bugs e pull requests para features. Siga as boas práticas de commit (Conventional Commits).

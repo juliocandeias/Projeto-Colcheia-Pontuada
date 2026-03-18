@@ -106,7 +106,7 @@ colcheia-pontuada/
 
 ## MER do projeto
 
-https://excalidraw.com/#json=7uTW7G_1ZCx8ijZvB4fn7,x_02gZd02wPOong7-zL5HA
+MER Projeto Colcheia Pontuada-2026-03-18-121801.png
 
 
 ## Contribuições

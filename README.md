@@ -106,7 +106,7 @@ colcheia-pontuada/
 
 ## MER do projeto
 
-![MER do Projeto](Pontuada-2026-03-18-121801.png)
+![MER do Projeto](MER.png)
 
 
 ## Contribuições

@@ -6,13 +6,18 @@ create table grupo (
 id_grupo int not null auto_increment primary key,
 Nome varchar(50) not null,
 Nivel set("Iniciante","Amador","Profissional"),
-id_formacao int not null
+id_formacao int not null,
+id_maestro int not null,
+constraint fk_formacao foreign key (formacao) references formacao (id_formacao),
+constraint fk_maestro foreign key (maestro) references maestro (id_maestro)
 );
 
 create table grupo_musico (
 id_grupo_musico int not null primary key,
 id_grupo int not null,
-id_musico int not null
+id_musico int not null,
+constraint fk_grupo foreign key (id_grupo) references musico (id_grupo),
+constraint fk_peca foreign key (peca) references peca (id_peca)
 );
 
 create table musico (
@@ -29,19 +34,26 @@ Nome varchar(50) not null
 create table repertorio_peca(
 id_repertorio_peca int not null primary key,
 id_repertorio int not null,
-id_peca int not null
+id_peca int not null,
+constraint fk_repertorio foreign key (id_repertorio) references musico (id_repertorio),
+constraint fk_peca foreign key (peca) references peca (id_peca)
 );
 
 create table partitura (
 id_partitura int not null auto_increment primary key,
 id_peca int not null,
-id_instrumento int not null
+id_instrumento int not null,
+pdf longblob,
+constraint fk_peca foreign key (peca) references peca (id_peca),
+constraint fk_instrumento foreign key (instrumento) references instrumento (instrumento)
 );
 
 create table musico_partitura(
 id_musico_partitura int not null primary key,
 id_musico int not null,
-id_partitura int not null
+id_partitura int not null,
+constraint fk_musico foreign key (id_musico) references musico (id_musico),
+constraint fk_partitura foreign key (partitura) references partitura (id_partitura)
 );
 
 create table formacao (
@@ -52,7 +64,9 @@ Nome Varchar(50) not null
 create table instrumento_formacao (
 id_instrumento_formacao int not null primary key,
 id_instrumento int not null,
-id_formacao int not null
+id_formacao int not null,
+constraint fk_formacao foreign key (id_instrumento) references instrumento (id_instrumento),
+constraint fk_formacao foreign key (id_formacao) references formacao (id_formacao)
 );
 
 create table instrumento (
@@ -64,7 +78,9 @@ Familia set('corda_friccionada','corda_pincada','corda_batida','sopro_madeira','
 create table instrumento_musico (
 id_instrumento_musico int not null primary key,
 id_instrumento int not null,
-id_musico int not null
+id_musico int not null,
+constraint fk_instrumento foreign key (id_instrumento) references instrumento (id_instrumento),
+constraint fk_musico foreign key (id_musico) references musico (id_musico)
 );
 
 create table maestro (
@@ -78,4 +94,6 @@ id_peca int not null auto_increment primary key,
 Nome varchar(50),
 id_formacao int not null,
 bpm int not null,
-tonalidade smallint not null)
+tonalidade smallint not null,
+constraint fk_formacao foreign key (id_formacao) references formacao (id_formacao)
+);

@@ -24,11 +24,6 @@ CREATE TABLE musico (
     Nivel SET('Iniciante','Amador','Profissional')
 );
 
-CREATE TABLE repertorio (
-    id_repertorio INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Nome VARCHAR(50) NOT NULL
-);
-
 CREATE TABLE grupo (
     id_grupo INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Nome VARCHAR(50) NOT NULL,
@@ -37,6 +32,13 @@ CREATE TABLE grupo (
     id_maestro INT NOT NULL,
     CONSTRAINT fk_grupo_formacao FOREIGN KEY (id_formacao) REFERENCES formacao(id_formacao),
     CONSTRAINT fk_grupo_maestro FOREIGN KEY (id_maestro) REFERENCES maestro(id_maestro)
+);
+
+CREATE TABLE repertorio (
+    id_repertorio INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(50) NOT NULL,
+    id_grupo INT NOT NULL,
+    CONSTRAINT fk_repertorio_grupo FOREIGN KEY (id_grupo) REFERENCES grupo(id_grupo)
 );
 
 CREATE TABLE peca (

@@ -21,15 +21,7 @@ CREATE TABLE maestro (
 CREATE TABLE musico (
     id_musico INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Nome VARCHAR(50) NOT NULL,
-    Nivel SET("Iniciante","Amador","Profissional")
-);
-
-CREATE TABLE grupo (
-    id_grupo INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Nome VARCHAR(50) NOT NULL,
-    Nivel SET("Iniciante","Amador","Profissional"),
-    id_formacao INT NOT NULL,
-    id_maestro INT NOT NULL
+    Nivel SET('Iniciante','Amador','Profissional')
 );
 
 CREATE TABLE repertorio (
@@ -37,94 +29,76 @@ CREATE TABLE repertorio (
     Nome VARCHAR(50) NOT NULL
 );
 
+CREATE TABLE grupo (
+    id_grupo INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(50) NOT NULL,
+    Nivel SET('Iniciante','Amador','Profissional'),
+    id_formacao INT NOT NULL,
+    id_maestro INT NOT NULL,
+    CONSTRAINT fk_grupo_formacao FOREIGN KEY (id_formacao) REFERENCES formacao(id_formacao),
+    CONSTRAINT fk_grupo_maestro FOREIGN KEY (id_maestro) REFERENCES maestro(id_maestro)
+);
+
 CREATE TABLE peca (
     id_peca INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Nome VARCHAR(50),
     id_formacao INT NOT NULL,
     bpm INT NOT NULL,
-    tonalidade SMALLINT NOT NULL
+    tonalidade SMALLINT NOT NULL,
+    CONSTRAINT fk_peca_formacao FOREIGN KEY (id_formacao) REFERENCES formacao(id_formacao)
 );
 
--- Demais tabelas de junção (sem mudanças significativas)
 CREATE TABLE grupo_musico (
-    id_grupo_musico INT NOT NULL PRIMARY KEY,
+    id_grupo_musico INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_grupo INT NOT NULL,
-    id_musico INT NOT NULL
+    id_musico INT NOT NULL,
+    CONSTRAINT fk_grupo_musico_grupo FOREIGN KEY (id_grupo) REFERENCES grupo(id_grupo),
+    CONSTRAINT fk_grupo_musico_musico FOREIGN KEY (id_musico) REFERENCES musico(id_musico),
+    UNIQUE KEY uk_grupo_musico (id_grupo, id_musico)
 );
 
 CREATE TABLE repertorio_peca (
-    id_repertorio_peca INT NOT NULL PRIMARY KEY,
+    id_repertorio_peca INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_repertorio INT NOT NULL,
-    id_peca INT NOT NULL
+    id_peca INT NOT NULL,
+    CONSTRAINT fk_repertorio_peca_repertorio FOREIGN KEY (id_repertorio) REFERENCES repertorio(id_repertorio),
+    CONSTRAINT fk_repertorio_peca_peca FOREIGN KEY (id_peca) REFERENCES peca(id_peca),
+    UNIQUE KEY uk_repertorio_peca (id_repertorio, id_peca)
 );
 
 CREATE TABLE partitura (
     id_partitura INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_peca INT NOT NULL,
     id_instrumento INT NOT NULL,
-    pdf LONGBLOB
+    pdf LONGBLOB,
+    CONSTRAINT fk_partitura_peca FOREIGN KEY (id_peca) REFERENCES peca(id_peca),
+    CONSTRAINT fk_partitura_instrumento FOREIGN KEY (id_instrumento) REFERENCES instrumento(id_instrumento),
+    UNIQUE KEY uk_partitura (id_peca, id_instrumento)
 );
 
 CREATE TABLE musico_partitura (
-    id_musico_partitura INT NOT NULL PRIMARY KEY,
+    id_musico_partitura INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_musico INT NOT NULL,
-    id_partitura INT NOT NULL
+    id_partitura INT NOT NULL,
+    CONSTRAINT fk_musico_partitura_musico FOREIGN KEY (id_musico) REFERENCES musico(id_musico),
+    CONSTRAINT fk_musico_partitura_partitura FOREIGN KEY (id_partitura) REFERENCES partitura(id_partitura),
+    UNIQUE KEY uk_musico_partitura (id_musico, id_partitura)
 );
 
 CREATE TABLE instrumento_formacao (
-    id_instrumento_formacao INT NOT NULL PRIMARY KEY,
+    id_instrumento_formacao INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_instrumento INT NOT NULL,
-    id_formacao INT NOT NULL
+    id_formacao INT NOT NULL,
+    CONSTRAINT fk_inst_form_instrumento FOREIGN KEY (id_instrumento) REFERENCES instrumento(id_instrumento),
+    CONSTRAINT fk_inst_form_formacao FOREIGN KEY (id_formacao) REFERENCES formacao(id_formacao),
+    UNIQUE KEY uk_instrumento_formacao (id_instrumento, id_formacao)
 );
 
 CREATE TABLE instrumento_musico (
-    id_instrumento_musico INT NOT NULL PRIMARY KEY,
+    id_instrumento_musico INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_instrumento INT NOT NULL,
-    id_musico INT NOT NULL
+    id_musico INT NOT NULL,
+    CONSTRAINT fk_inst_mus_instrumento FOREIGN KEY (id_instrumento) REFERENCES instrumento(id_instrumento),
+    CONSTRAINT fk_inst_mus_musico FOREIGN KEY (id_musico) REFERENCES musico(id_musico),
+    UNIQUE KEY uk_instrumento_musico (id_instrumento, id_musico)
 );
-
-
-ALTER TABLE grupo 
-ADD CONSTRAINT fk_formacao FOREIGN KEY (id_formacao) REFERENCES formacao(id_formacao);
-
-ALTER TABLE grupo 
-ADD CONSTRAINT fk_maestro FOREIGN KEY (id_maestro) REFERENCES maestro(id_maestro);
-
-ALTER TABLE grupo_musico
-ADD CONSTRAINT fk_grupo FOREIGN KEY (id_grupo) REFERENCES grupo(id_grupo);
-
-ALTER TABLE grupo_musico
-ADD CONSTRAINT fk_musico FOREIGN KEY (id_musico) REFERENCES musico(id_musico);
-
-ALTER TABLE repertorio_peca
-ADD CONSTRAINT fk_repertorio FOREIGN KEY (id_repertorio) REFERENCES repertorio(id_repertorio);
-
-ALTER TABLE repertorio_peca
-ADD CONSTRAINT fk_peca FOREIGN KEY (id_peca) REFERENCES peca(id_peca);
-
-ALTER TABLE partitura
-ADD CONSTRAINT fk_peca_part FOREIGN KEY (id_peca) REFERENCES peca(id_peca);
-
-ALTER TABLE partitura
-ADD CONSTRAINT fk_instrumento_part FOREIGN KEY (id_instrumento) REFERENCES instrumento(id_instrumento);
-
-ALTER TABLE musico_partitura
-ADD CONSTRAINT fk_musico_part FOREIGN KEY (id_musico) REFERENCES musico(id_musico);
-
-ALTER TABLE musico_partitura
-ADD CONSTRAINT fk_partitura FOREIGN KEY (id_partitura) REFERENCES partitura(id_partitura);
-
-ALTER TABLE instrumento_formacao
-ADD CONSTRAINT fk_instrumento_form FOREIGN KEY (id_instrumento) REFERENCES instrumento(id_instrumento);
-
-ALTER TABLE instrumento_formacao
-ADD CONSTRAINT fk_formacao_inst FOREIGN KEY (id_formacao) REFERENCES formacao(id_formacao);
-
-ALTER TABLE instrumento_musico
-ADD CONSTRAINT fk_instrumento_mus FOREIGN KEY (id_instrumento) REFERENCES instrumento(id_instrumento);
-
-ALTER TABLE instrumento_musico
-ADD CONSTRAINT fk_musico_inst FOREIGN KEY (id_musico) REFERENCES musico(id_musico);
-
-ALTER TABLE peca
-ADD CONSTRAINT fk_formacao_peca FOREIGN KEY (id_formacao) REFERENCES formacao(id_formacao);

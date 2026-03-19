@@ -105,36 +105,31 @@ CREATE TABLE instrumento_musico (
     UNIQUE KEY uk_instrumento_musico (id_instrumento, id_musico)
 );
 
-PARA O PgAdmin
+Para o PgAdmin
 
--- Tabela formacao
 CREATE TABLE formacao (
     id_formacao SERIAL PRIMARY KEY,
     nome VARCHAR(50) NOT NULL
 );
 
--- Tabela instrumento
 CREATE TABLE instrumento (
     id_instrumento SERIAL PRIMARY KEY,
     nome VARCHAR(50),
-    familia TEXT[] -- PostgreSQL usa arrays para SET
+    familia TEXT[]
 );
 
--- Tabela maestro
 CREATE TABLE maestro (
     id_maestro SERIAL PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
-    espec TEXT[] -- PostgreSQL usa arrays para SET
+    espec TEXT[]
 );
 
--- Tabela musico
 CREATE TABLE musico (
     id_musico SERIAL PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
     nivel TEXT[]
 );
 
--- Tabela grupo
 CREATE TABLE grupo (
     id_grupo SERIAL PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
@@ -143,14 +138,12 @@ CREATE TABLE grupo (
     id_maestro INTEGER NOT NULL REFERENCES maestro(id_maestro)
 );
 
--- Tabela repertorio
 CREATE TABLE repertorio (
     id_repertorio SERIAL PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
     id_grupo INTEGER NOT NULL REFERENCES grupo(id_grupo)
 );
 
--- Tabela peca
 CREATE TABLE peca (
     id_peca SERIAL PRIMARY KEY,
     nome VARCHAR(50),
@@ -159,7 +152,6 @@ CREATE TABLE peca (
     tonalidade SMALLINT NOT NULL
 );
 
--- Tabela grupo_musico
 CREATE TABLE grupo_musico (
     id_grupo_musico SERIAL PRIMARY KEY,
     id_grupo INTEGER NOT NULL REFERENCES grupo(id_grupo),
@@ -167,7 +159,6 @@ CREATE TABLE grupo_musico (
     UNIQUE (id_grupo, id_musico)
 );
 
--- Tabela repertorio_peca
 CREATE TABLE repertorio_peca (
     id_repertorio_peca SERIAL PRIMARY KEY,
     id_repertorio INTEGER NOT NULL REFERENCES repertorio(id_repertorio),
@@ -175,7 +166,6 @@ CREATE TABLE repertorio_peca (
     UNIQUE (id_repertorio, id_peca)
 );
 
--- Tabela partitura
 CREATE TABLE partitura (
     id_partitura SERIAL PRIMARY KEY,
     id_peca INTEGER NOT NULL REFERENCES peca(id_peca),
@@ -184,7 +174,6 @@ CREATE TABLE partitura (
     UNIQUE (id_peca, id_instrumento)
 );
 
--- Tabela musico_partitura
 CREATE TABLE musico_partitura (
     id_musico_partitura SERIAL PRIMARY KEY,
     id_musico INTEGER NOT NULL REFERENCES musico(id_musico),
@@ -192,7 +181,6 @@ CREATE TABLE musico_partitura (
     UNIQUE (id_musico, id_partitura)
 );
 
--- Tabela instrumento_formacao
 CREATE TABLE instrumento_formacao (
     id_instrumento_formacao SERIAL PRIMARY KEY,
     id_instrumento INTEGER NOT NULL REFERENCES instrumento(id_instrumento),
@@ -200,7 +188,6 @@ CREATE TABLE instrumento_formacao (
     UNIQUE (id_instrumento, id_formacao)
 );
 
--- Tabela instrumento_musico
 CREATE TABLE instrumento_musico (
     id_instrumento_musico SERIAL PRIMARY KEY,
     id_instrumento INTEGER NOT NULL REFERENCES instrumento(id_instrumento),

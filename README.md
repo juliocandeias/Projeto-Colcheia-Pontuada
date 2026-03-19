@@ -1,7 +1,3 @@
-Aqui está o README atualizado com as remoções solicitadas (Docker, licença, contato) e desenvolvedores adicionados:
-
-***
-
 # Colcheia Pontuada
 
 Sistema de Gerenciamento de Partituras para Orquestras, Institutos e Conservatórios.

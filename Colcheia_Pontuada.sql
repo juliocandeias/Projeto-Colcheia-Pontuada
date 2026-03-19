@@ -1,0 +1,87 @@
+CREATE TABLE formacao (
+    id_formacao SERIAL PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE instrumento (
+    id_instrumento SERIAL PRIMARY KEY,
+    nome VARCHAR(50),
+    familia TEXT[]
+);
+
+CREATE TABLE maestro (
+    id_maestro SERIAL PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    espec TEXT[]
+);
+
+CREATE TABLE musico (
+    id_musico SERIAL PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    nivel TEXT[]
+);
+
+CREATE TABLE grupo (
+    id_grupo SERIAL PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    nivel TEXT[],
+    id_formacao INTEGER NOT NULL REFERENCES formacao(id_formacao),
+    id_maestro INTEGER NOT NULL REFERENCES maestro(id_maestro)
+);
+
+CREATE TABLE repertorio (
+    id_repertorio SERIAL PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    id_grupo INTEGER NOT NULL REFERENCES grupo(id_grupo)
+);
+
+CREATE TABLE peca (
+    id_peca SERIAL PRIMARY KEY,
+    nome VARCHAR(50),
+    id_formacao INTEGER NOT NULL REFERENCES formacao(id_formacao),
+    bpm INTEGER NOT NULL,
+    tonalidade SMALLINT NOT NULL
+);
+
+CREATE TABLE grupo_musico (
+    id_grupo_musico SERIAL PRIMARY KEY,
+    id_grupo INTEGER NOT NULL REFERENCES grupo(id_grupo),
+    id_musico INTEGER NOT NULL REFERENCES musico(id_musico),
+    UNIQUE (id_grupo, id_musico)
+);
+
+CREATE TABLE repertorio_peca (
+    id_repertorio_peca SERIAL PRIMARY KEY,
+    id_repertorio INTEGER NOT NULL REFERENCES repertorio(id_repertorio),
+    id_peca INTEGER NOT NULL REFERENCES peca(id_peca),
+    UNIQUE (id_repertorio, id_peca)
+);
+
+CREATE TABLE partitura (
+    id_partitura SERIAL PRIMARY KEY,
+    id_peca INTEGER NOT NULL REFERENCES peca(id_peca),
+    id_instrumento INTEGER NOT NULL REFERENCES instrumento(id_instrumento),
+    pdf BYTEA,
+    UNIQUE (id_peca, id_instrumento)
+);
+
+CREATE TABLE musico_partitura (
+    id_musico_partitura SERIAL PRIMARY KEY,
+    id_musico INTEGER NOT NULL REFERENCES musico(id_musico),
+    id_partitura INTEGER NOT NULL REFERENCES partitura(id_partitura),
+    UNIQUE (id_musico, id_partitura)
+);
+
+CREATE TABLE instrumento_formacao (
+    id_instrumento_formacao SERIAL PRIMARY KEY,
+    id_instrumento INTEGER NOT NULL REFERENCES instrumento(id_instrumento),
+    id_formacao INTEGER NOT NULL REFERENCES formacao(id_formacao),
+    UNIQUE (id_instrumento, id_formacao)
+);
+
+CREATE TABLE instrumento_musico (
+    id_instrumento_musico SERIAL PRIMARY KEY,
+    id_instrumento INTEGER NOT NULL REFERENCES instrumento(id_instrumento),
+    id_musico INTEGER NOT NULL REFERENCES musico(id_musico),
+    UNIQUE (id_instrumento, id_musico)
+);

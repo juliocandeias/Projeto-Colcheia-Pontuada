@@ -1,26 +1,49 @@
 package entidades;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Forma {
-	public int id_forma;
-	public int instrumentos;
-	public String Nome;
+	private int id_forma;
+	private String nome;
+	private List<Instrumento>instrumento;
 	
-	public void Forma(int id_forma, int instrumentos, String Nome) {
-		this.id_forma = id_forma;
-		this.instrumentos = instrumentos;
-		this.Nome = Nome;
+	public void Forma(int id_forma, String nome) {
+		this.setId_forma(id_forma);
+		this.setNome(nome);
+		this.setInstrumento(new ArrayList());
 	}
 	
 	public void setid_forma(int id_forma) {
-		this.id_forma = id_forma;
+		this.setId_forma(id_forma);
 	};
 	
-	public void setinstrumentos(int instrumentos) {
-		this.instrumentos = instrumentos;
+	
+	public void setnome(String nome) {
+		this.setNome(nome);
 	}
-	
-	public void setnome(String Nome) {
-		this.Nome = Nome;
-	
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public int getId_forma() {
+		return id_forma;
+	}
+
+	public void setId_forma(int id_forma) {
+		this.id_forma = id_forma;
+	}
+
+	public List<Instrumento> getInstrumento() {
+		return instrumento;
+	}
+
+	public void setInstrumento(List<Instrumento> instrumento) {
+		this.instrumento = instrumento;
 	}
 }

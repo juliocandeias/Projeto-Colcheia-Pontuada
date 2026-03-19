@@ -1,31 +1,54 @@
 package entidades;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Repertorio {
-	public int id_repertorio;
-	public int partituras;
-	public int forma;
-	public String Nome;
+	private int id_repertorio;
+	private String Nome;
+	private List<Grupo>grupo;
+	private List<Peca>peca;
 	
-	public Repertorio(int id_repertorio, int partituras, int forma, String Nome) {
-		this.id_repertorio = id_repertorio;
-		this.partituras = partituras;
-		this.forma = forma;
+	public Repertorio(int id_repertorio, String Nome) {
+		this.setId_repertorio(id_repertorio);
 		this.Nome = Nome;
+		this.setGrupo(new ArrayList());
+		this.setPeca(new ArrayList());
 	}
 	
 	public void setid_repertorio (int id_repertorio) {
-		this.id_repertorio = id_repertorio;
-	}
-	
-	public void setpartituras (int partituras) {
-		this.partituras = partituras;
-	}
-
-	public void setforma (int forma) {
-		this.forma = forma;
+		this.setId_repertorio(id_repertorio);
 	}
 	
 	public void setNome (String Nome) {
 		this.Nome = Nome;
+	}
+
+	public String getNome (String Nome) {
+		return Nome;
+	}
+	 
+	public int getId_repertorio() {
+		return id_repertorio;
+	}
+
+	public void setId_repertorio(int id_repertorio) {
+		this.id_repertorio = id_repertorio;
+	}
+
+	public List<Grupo> getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(List<Grupo> grupo) {
+		this.grupo = grupo;
+	}
+
+	public List<Peca> getPeca() {
+		return peca;
+	}
+
+	public void setPeca(List<Peca> peca) {
+		this.peca = peca;
 	}
 }

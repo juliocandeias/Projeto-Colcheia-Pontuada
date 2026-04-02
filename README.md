@@ -28,8 +28,6 @@ O projeto foi criado como trabalho de POO e BD.
 
 ## MER do projeto
 
-![MER do Projeto](MER.png)
-
 https://excalidraw.com/#json=nHBR7yLRIKkMTje2UAT0n,Of_Xbk6goVh9JCHueEpd3A
 
 ## Contribuições

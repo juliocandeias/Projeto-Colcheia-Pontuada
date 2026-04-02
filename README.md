@@ -28,7 +28,7 @@ O projeto foi criado como trabalho de POO e BD.
 
 ## MER do projeto
 
-![MER do Projeto](MER.png)
+![MER do Projeto]()
 
 
 ## Contribuições
